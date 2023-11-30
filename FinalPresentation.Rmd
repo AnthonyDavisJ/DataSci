@@ -1,0 +1,33 @@
+---
+title: "FinalPresentation"
+author: "Anthony Davis"
+date: "2023-11-30"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(readxl)
+library(ggplot2)
+library(tidyverse)
+miles_driven=read_excel('miles driven.xlsx')
+```
+
+$\mu:$ Average miles driven a year
+$H_0:\mu1=\mu2$ vs $H_a:\mu1<\mu2$
+```{r}
+avg_mi_US_per_day=13476/365
+
+t.test(miles_driven$MilesDriven,mu=avg_mi_US_per_day,alternative='less')
+```
+P-value is 5.185e-06 which is less than the s.1.
+Therefore we reject the $H_0$. At $5\%$ s.1. data does provide enough evidence to conclude that mean miles driven by me is less than the US average.
+
+```{r}
+ggplot(data=miles_driven,aes(x=Day,y=MilesDriven))+geom_line()+geom_line(y=avg_mi_US_per_day,color='red')+ylim(c(0,45))
+  
+```
+
